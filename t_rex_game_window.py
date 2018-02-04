@@ -5,6 +5,9 @@ from PyQt5.QtCore import Qt, QRectF, QTimer, QPoint
 from PyQt5.QtMultimedia import QSound
 from random import choice
 
+from bases.gameobject import add_game_object, render_all
+
+from trex.trex import *
 
 class GameWindow(QWidget):
 
@@ -12,6 +15,7 @@ class GameWindow(QWidget):
         super().__init__()
         self.t_rex_idle = QImage('images/trex-idle.png')
         self.initSound()
+        self.setup_trex()
         self.initTimer()
         self.initUI()
 
@@ -19,6 +23,8 @@ class GameWindow(QWidget):
         self.correctSound = QSound('sound/correct.wav')
         self.incorrectSound = QSound('sound/incorrect.wav')
 
+    def setup_trex(self):
+        add_game_object(trex)
 
     def initTimer(self):
         self.timer = QTimer()
@@ -41,7 +47,8 @@ class GameWindow(QWidget):
         qp = QPainter()
         qp.begin(self)
         qp.fillRect(0, 0, self.width(), self.height(), QColor(255, 255, 255))
-        qp.drawImage(QPoint(0, 0), self.t_rex_idle)
+        run_all()
+        render_all(qp)
         qp.end()
 
 
