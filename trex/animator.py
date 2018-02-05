@@ -16,5 +16,9 @@ class TRexAnimator:
             self.anim = self.idle_anim
         elif trex.state == TRexState.RUNNING:
             self.anim = self.run_anim
+            self.anim.play()
         elif trex.state == TRexState.DUCKING:
             self.anim = self.duck_anim
+        elif trex.state == TRexState.JUMPING:
+            self.anim = self.run_anim
+            self.anim.pause()

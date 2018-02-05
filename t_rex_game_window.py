@@ -41,7 +41,7 @@ class GameWindow(QWidget):
         self.repaint()
 
 
-    def initUI(self):
+    def initUI(self):        
         self.text = "Body T Rex"
         self.setFixedSize(800, 300)
         self.show()

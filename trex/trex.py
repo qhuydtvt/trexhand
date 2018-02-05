@@ -21,18 +21,29 @@ class TRex(GameObject):
         self.move_vertical()
 
     def move_vertical(self):
-        if input.jump_pressed and self.state != TRexState.JUMPING:
-            self.velocity.y = -self.jump_speed
-            self.state = TRexState.JUMPING
-        else:
-            self.velocity.y += self.gravity
+        if self.state == TRexState.IDLE or self.state == TRexState.RUNNING:
+            if input.jump_pressed:
+                self.velocity.y = -self.jump_speed
+                self.state = TRexState.JUMPING
+            elif input.duck_pressed:
+                self.state = TRexState.DUCKING
+        if self.state == TRexState.DUCKING:
+            if input.jump_pressed:
+                self.velocity.y = -self.jump_speed
+                self.state = TRexState.JUMPING
+            elif not input.duck_pressed:
+                self.state = TRexState.RUNNING
 
-        if self.position.y + self.velocity.y >= self.base_y:
-            self.position.y = self.base_y
-            self.velocity.y = 0
-            self.state = TRexState.RUNNING
-        else:
-            self.position.y += self.velocity.y
+        self.velocity.y += self.gravity
+
+        if self.state == TRexState.JUMPING:
+            if self.position.y + self.velocity.y >= self.base_y:
+                self.position.y = self.base_y
+                self.velocity.y = 0
+                self.state = TRexState.RUNNING
+            else:
+                self.position.y += self.velocity.y
+
 
     def set_initial_position(self, x, y):
         self.position = Vector2D(x, y)

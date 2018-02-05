@@ -17,16 +17,24 @@ class Animation:
         self.frame_count = 0
         self.loop = True
         self.frame_multiplier = 5
+        self.playing = True
 
         if "loop" in kwargs:
             self.loop = kwargs["loop"]
         if "frame_multiplier" in kwargs:
             self.frame_multiplier = kwargs["frame_multiplier"]
 
+    def pause(self):
+        self.playing = False
+
+    def play(self):
+        self.playing = True
+
     def render(self, qp, position):
         image = self.images[self.image_index]
         qp.drawImage(QPoint(position.x, position.y), image)
-        self.frame_count += 1
-        if self.frame_count >= self.frame_multiplier:
-            self.frame_count = 0
-            self.image_index = (self.image_index + 1) % len(self.images)
+        if self.playing:
+            self.frame_count += 1
+            if self.frame_count >= self.frame_multiplier:
+                self.frame_count = 0
+                self.image_index = (self.image_index + 1) % len(self.images)
