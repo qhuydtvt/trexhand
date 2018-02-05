@@ -7,6 +7,7 @@ class GameObject:
         self.renderer = None
         self.children = []
 
+
     def run(self, parent):
         if parent is not None:
             self.screen_position = parent.position.add(self.position)

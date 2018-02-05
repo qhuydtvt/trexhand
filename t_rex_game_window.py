@@ -27,7 +27,7 @@ class GameWindow(QWidget):
         self.incorrectSound = QSound('sound/incorrect.wav')
 
     def setup_trex(self):
-        trex.set_initial_position(10, 140)
+        trex.set_initial_position(60, 140)
         add_game_object(trex)
 
     def initTimer(self):
@@ -41,7 +41,7 @@ class GameWindow(QWidget):
         self.repaint()
 
 
-    def initUI(self):        
+    def initUI(self):
         self.text = "Body T Rex"
         self.setFixedSize(800, 300)
         self.show()

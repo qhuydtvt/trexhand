@@ -4,6 +4,7 @@ from trex.state import TRexState
 from trex.animator import TRexAnimator
 from inputs import input
 from bases.vector2d import Vector2D
+from bases.boxcollider import BoxCollider
 
 class TRex(GameObject):
     def __init__(self):
@@ -14,6 +15,12 @@ class TRex(GameObject):
         self.jump_speed = 14
         self.gravity = 1
         self.base_y = 0
+        self.setup_physics()
+
+    def setup_physics(self):
+        self.box_collider = BoxCollider(40, 40)
+        self.box_collider.position.x -= 8
+        self.children.append(self.box_collider)
 
     def run(self, parent):
         GameObject.run(self, parent)
