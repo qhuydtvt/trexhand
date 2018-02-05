@@ -3,13 +3,21 @@ class Vector2D:
         self.x = x
         self.y = y
 
-    def add(x, y):
+    def add(self, x, y):
         return Vector2D(self.x + x, self.y + y)
 
-    def multiply(m):
+    def add(self, other):
+        return Vector2D(self.x + other.x, self.y + other.y)
+
+    def multiply(self, m):
         return Vector2D(self.x * m, self.y * m)
 
-ZERO = Vector2D(0, 0)
+    def __str__(self):
+        return "{0}, {1}".format(self.x, self.y)
+
+def ZERO():
+    return Vector2D(0, 0)
+
 ONE = Vector2D(1, 1)
 UP = Vector2D(0, -1)
 DOWN = Vector2D(0, 1)

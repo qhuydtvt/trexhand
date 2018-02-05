@@ -11,12 +11,12 @@ class TRex(GameObject):
         self.velocity = Vector2D(0, 0)
         self.renderer = TRexAnimator()
         self.state = TRexState.IDLE
-        self.jump_speed = 15
-        self.gravity = 2
+        self.jump_speed = 14
+        self.gravity = 1
         self.base_y = 0
 
-    def run(self):
-        GameObject.run(self)
+    def run(self, parent):
+        GameObject.run(self, parent)
         self.renderer.update(self)
         self.move_vertical()
 
@@ -35,8 +35,7 @@ class TRex(GameObject):
             self.position.y += self.velocity.y
 
     def set_initial_position(self, x, y):
-        self.position.x = x
-        self.position.y = y
+        self.position = Vector2D(x, y)
         self.base_y = y
 
 trex = TRex()
