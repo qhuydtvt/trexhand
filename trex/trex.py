@@ -1,10 +1,11 @@
 from bases.gameobject import *
 from bases.renderer import *
-from trex.state import TRexState
-from trex.animator import TRexAnimator
 from inputs import input
 from bases.vector2d import Vector2D
-from bases.boxcollider import BoxCollider
+
+from trex.state import TRexState
+from trex.animator import TRexAnimator
+from trex.physics import TRexPhysics
 
 class TRex(GameObject):
     def __init__(self):
@@ -18,14 +19,13 @@ class TRex(GameObject):
         self.setup_physics()
 
     def setup_physics(self):
-        self.box_collider = BoxCollider(40, 40)
-        self.box_collider.position.x -= 8
-        self.children.append(self.box_collider)
+        self.physics = TRexPhysics(self)
 
     def run(self, parent):
         GameObject.run(self, parent)
-        self.renderer.update(self)
         self.move_vertical()
+        self.physics.update(self)
+        self.renderer.update(self)
 
     def move_vertical(self):
         if self.state == TRexState.IDLE or self.state == TRexState.RUNNING:

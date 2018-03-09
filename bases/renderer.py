@@ -31,7 +31,7 @@ class Animation:
 
     def render(self, qp, position):
         image = self.images[self.image_index]
-        qp.drawImage(QPoint(position.x, position.y), image)
+        qp.drawImage(QPoint(position.x - image.width() / 2, position.y - image.height() / 2), image)
         if self.playing:
             self.frame_count += 1
             if self.frame_count >= self.frame_multiplier:

@@ -4,11 +4,13 @@ from PyQt5.QtGui import QPainter, QColor, QFont, QBrush, QImage
 from PyQt5.QtCore import Qt, QRectF, QTimer, QPoint
 from PyQt5.QtMultimedia import QSound
 from random import choice
+from settings import *
 
 
 from bases.gameobject import add_game_object, render_all
 
 from trex.trex import *
+from cactus.cactus import *
 from inputs import input
 
 class GameWindow(QWidget):
@@ -17,6 +19,7 @@ class GameWindow(QWidget):
         super().__init__()
         self.t_rex_idle = QImage('images/trex-idle.png')
         self.initSound()
+        self.setup_cactus()
         self.setup_trex()
         self.initTimer()
         self.initUI()
@@ -26,8 +29,12 @@ class GameWindow(QWidget):
         self.correctSound = QSound('sound/correct.wav')
         self.incorrectSound = QSound('sound/incorrect.wav')
 
+    def setup_cactus(self):
+        cactus_spawner = CactusSpawner()
+        add_game_object(cactus_spawner)
+
     def setup_trex(self):
-        trex.set_initial_position(60, 140)
+        trex.set_initial_position(60, BASE_Y)
         add_game_object(trex)
 
     def initTimer(self):
@@ -43,7 +50,7 @@ class GameWindow(QWidget):
 
     def initUI(self):
         self.text = "Body T Rex"
-        self.setFixedSize(800, 300)
+        self.setFixedSize(SCREEN_WIDTH, SCREEN_HEIGHT)
         self.show()
 
 

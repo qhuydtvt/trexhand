@@ -25,3 +25,8 @@ class BoxCollider(GameObject):
         x_overlap = other.right() >= self.left() and other.left() <= self.right();
         y_overlap = other.bottom() >= self.top() and other.top() <= self.bottom();
         return x_overlap and y_overlap;
+
+    def run(self, parent):
+        GameObject.run(self, parent)
+        self.renderer.width = self.width
+        self.renderer.height = self.height
