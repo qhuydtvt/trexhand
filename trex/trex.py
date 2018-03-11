@@ -21,10 +21,14 @@ class TRex(GameObject):
     def setup_physics(self):
         self.physics = TRexPhysics(self)
 
+    def play_dead(self):
+        self.state = TRexState.DEAD
+
     def run(self, parent):
         GameObject.run(self, parent)
-        self.move_vertical()
-        self.physics.update(self)
+        if self.state != TRexState.DEAD:
+            self.move_vertical()
+            self.physics.update(self)
         self.renderer.update(self)
 
     def move_vertical(self):
@@ -57,3 +61,6 @@ class TRex(GameObject):
         self.base_y = y
 
 trex = TRex()
+
+def instance():
+    return trex

@@ -6,6 +6,7 @@ class TRexAnimator:
         self.idle_anim = ImageRenderer("images/t-rex/idle.png")
         self.run_anim = Animation("images/t-rex/run1.png", "images/t-rex/run2.png")
         self.duck_anim = Animation("images/t-rex/duck1.png", "images/t-rex/duck2.png")
+        self.dead_anim = ImageRenderer("images/t-rex/dead.png")
         self.anim = self.idle_anim
 
     def render(self, qp, position):
@@ -22,3 +23,5 @@ class TRexAnimator:
         elif trex.state == TRexState.JUMPING:
             self.anim = self.run_anim
             self.anim.pause()
+        elif trex.state == TRexState.DEAD:
+            self.anim = self.dead_anim

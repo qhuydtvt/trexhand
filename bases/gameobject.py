@@ -9,7 +9,6 @@ class GameObject:
         self.children = []
 
     def run(self, parent):
-        print(len(game_objects))
         if parent is not None:
             self.screen_position = parent.position.add(self.position)
         else:

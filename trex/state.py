@@ -5,3 +5,4 @@ class TRexState(Enum):
     RUNNING = 1
     JUMPING = 2
     DUCKING = 3
+    DEAD = 4
