@@ -1,8 +1,8 @@
-from bases.gameobject import GameObject, add_game_object
-from bases.boxcollider import BoxCollider
+from bases.gameobject import *
+from bases.boxcollider import *
 from bases.vector2d import *
-from bases.renderer import ImageRenderer
-from bases.counter import Counter
+from bases.renderer import *
+from bases.counter import *
 
 from settings import *
 from inputs import input
@@ -22,6 +22,8 @@ class Cactus(GameObject):
     def run(self, parent):
         GameObject.run(self, parent)
         self.position.x -= self.speed
+        if self.position.x < 0:
+            self.active = False
 
 class CactusSpawner(GameObject):
     def __init__(self):
@@ -33,9 +35,8 @@ class CactusSpawner(GameObject):
         self.enabled = True
 
     def spawn(self):
-        cactus = Cactus()
+        cactus = recycle(Cactus)
         cactus.position = Vector2D(SCREEN_WIDTH, BASE_Y + 4)
-        add_game_object(cactus)
 
     def run(self, parent):
         GameObject.run(self, parent)
