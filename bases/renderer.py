@@ -1,5 +1,5 @@
-from PyQt5.QtGui import QPainter, QColor, QFont, QBrush, QImage
-from PyQt5.QtCore import QPoint
+from PyQt5.QtGui import QPainter, QColor, QFont, QBrush, QImage, QFontMetrics
+from PyQt5.QtCore import QPoint, QRect, Qt
 
 class ImageRenderer:
     def __init__(self, image_url):
@@ -46,3 +46,16 @@ class RectRenderer:
     def render(self, qp, position):
         brush = QBrush(QColor('red'))
         qp.drawRect(position.x - self.width / 2, position.y - self.height / 2, self.width, self.height)
+
+
+class TextRenderer:
+    def __init__(self):
+        self.text = ""
+
+    def render(self, qp, position):
+        font = QFont('Consolas', 16)
+        metrics = QFontMetrics(font)
+        rect = metrics.boundingRect(self.text)
+
+        qp.setFont(font)
+        qp.drawText(QRect(position.x, position.y, rect.width(), rect.height()), Qt.AlignLeft, self.text)

@@ -1,13 +1,15 @@
 from bases.vector2d import Vector2D
 from bases.gameobject import GameObject
 from bases.renderer import RectRenderer
+from settings import SHOW_BOX_COLLIDER
 
 class BoxCollider(GameObject):
     def __init__(self, width, height):
         GameObject.__init__(self)
         self.width = width
         self.height = height
-        self.renderer = RectRenderer(width, height)
+        if SHOW_BOX_COLLIDER:
+            self.renderer = RectRenderer(width, height)
 
     def left(self):
         return self.screen_position.x - self.width / 2
@@ -31,5 +33,6 @@ class BoxCollider(GameObject):
 
     def run(self, parent):
         GameObject.run(self, parent)
-        self.renderer.width = self.width
-        self.renderer.height = self.height
+        if SHOW_BOX_COLLIDER:
+            self.renderer.width = self.width
+            self.renderer.height = self.height

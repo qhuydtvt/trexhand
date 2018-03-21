@@ -4,6 +4,7 @@ from inputs import input
 from bases.gameobject import *
 from trex.trex import *
 from cactus.cactus import *
+from trex_scores.trex_score import Score
 from game_restarter import GameRestarter
 
 def restart_play_scene():
@@ -14,6 +15,7 @@ class PlayScene(Scene):
     def init_objects(self):
         self.init_cactus()
         self.init_trex()
+        self.init_score()
 
     def init_cactus(self):
         cactus_spawner = CactusSpawner()
@@ -27,3 +29,8 @@ class PlayScene(Scene):
         trex.game_restarter = game_restarter
         add_game_object(trex)
         add_game_object(game_restarter)
+
+
+    def init_score(self):
+        score = Score()
+        add_game_object(score)
