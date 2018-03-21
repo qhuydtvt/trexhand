@@ -6,12 +6,15 @@ from PyQt5.QtMultimedia import QSound
 from random import choice
 from settings import *
 
+from cv_thread import CVThread
+
 
 from bases.gameobject import add_game_object, render_all
 from trex_scenes.play_scene import *
 from bases.scenes import SceneManager
 
 from inputs import input
+
 
 class GameWindow(QWidget):
 
@@ -20,6 +23,8 @@ class GameWindow(QWidget):
         self.initSound()
         self.initTimer()
         self.initUI()
+        self.thread = CVThread()
+        self.thread.start()
         SceneManager.change_scene(PlayScene())
 
     def initSound(self):
