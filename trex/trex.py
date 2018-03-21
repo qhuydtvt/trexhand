@@ -7,7 +7,10 @@ from trex.state import TRexState
 from trex.animator import TRexAnimator
 from trex.physics import TRexPhysics
 
+from trex_scenes.play_scene import *
+
 class TRex(GameObject):
+    instance = None
     def __init__(self):
         GameObject.__init__(self)
         self.velocity = Vector2D(0, 0)
@@ -16,13 +19,16 @@ class TRex(GameObject):
         self.jump_speed = 14
         self.gravity = 1
         self.base_y = 0
+        self.game_restarter = None
         self.setup_physics()
+        TRex.instance = self
 
     def setup_physics(self):
         self.physics = TRexPhysics(self)
 
     def play_dead(self):
         self.state = TRexState.DEAD
+        self.game_restarter.enable()
 
     def run(self, parent):
         GameObject.run(self, parent)
@@ -55,12 +61,6 @@ class TRex(GameObject):
             else:
                 self.position.y += self.velocity.y
 
-
     def set_initial_position(self, x, y):
         self.position = Vector2D(x, y)
         self.base_y = y
-
-trex = TRex()
-
-def instance():
-    return trex

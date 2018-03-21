@@ -7,10 +7,14 @@ from bases.counter import *
 from settings import *
 from inputs import input
 
-from trex.trex import trex
+from trex.trex import TRex
 
 class Cactus(GameObject):
-    cactus_move_enabled = True
+    move_lock = False
+
+    @classmethod
+    def lock_move(cls):
+        cls.move_lock = True
 
     def __init__(self):
         GameObject.__init__(self)
@@ -25,7 +29,7 @@ class Cactus(GameObject):
 
     def run(self, parent):
         GameObject.run(self, parent)
-        if Cactus.cactus_move_enabled:
+        if not Cactus.move_lock:
             self.position.x -= self.speed
             if self.position.x < 0:
                 self.active = False
@@ -33,15 +37,17 @@ class Cactus(GameObject):
             self.run_physics()
 
     def run_physics(self):
-        if self.box_collider.collide_with(trex.box_collider):
-            trex.play_dead()
-            Cactus.cactus_move_enabled = False
+        if self.box_collider.collide_with(TRex.instance.box_collider):
+            TRex.instance.play_dead()
+            Cactus.lock_move()
+
 
 class CactusSpawner(GameObject):
     def __init__(self):
         GameObject.__init__(self)
         self.counter = Counter(200)
         self.enabled = False
+        Cactus.move_lock = False
 
     def start(self):
         self.enabled = True
@@ -53,7 +59,7 @@ class CactusSpawner(GameObject):
     def run(self, parent):
         GameObject.run(self, parent)
 
-        if self.enabled and Cactus.cactus_move_enabled:
+        if self.enabled and not Cactus.move_lock:
             if self.counter.run():
                 self.spawn()
                 self.counter.reset()

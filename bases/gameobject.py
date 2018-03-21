@@ -42,6 +42,9 @@ def recycle(t):
 def add_game_object(new_game_object):
     game_objects.append(new_game_object)
 
+def clear_all_game_objects():
+    game_objects.clear()
+
 def render_all(qp):
     for game_object in game_objects:
         if game_object.active:

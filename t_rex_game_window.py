@@ -8,34 +8,23 @@ from settings import *
 
 
 from bases.gameobject import add_game_object, render_all
+from trex_scenes.play_scene import *
+from bases.scenes import SceneManager
 
-from trex.trex import *
-from cactus.cactus import *
 from inputs import input
 
 class GameWindow(QWidget):
 
     def __init__(self):
         super().__init__()
-        self.t_rex_idle = QImage('images/trex-idle.png')
         self.initSound()
-        self.setup_cactus()
-        self.setup_trex()
         self.initTimer()
         self.initUI()
-
+        SceneManager.change_scene(PlayScene())
 
     def initSound(self):
         self.correctSound = QSound('sound/correct.wav')
         self.incorrectSound = QSound('sound/incorrect.wav')
-
-    def setup_cactus(self):
-        cactus_spawner = CactusSpawner()
-        add_game_object(cactus_spawner)
-
-    def setup_trex(self):
-        trex.set_initial_position(60, BASE_Y)
-        add_game_object(trex)
 
     def initTimer(self):
         self.timer = QTimer()
@@ -43,25 +32,22 @@ class GameWindow(QWidget):
         self.timer.timeout.connect(self.timerTick)
         self.timer.start()
 
-
-    def timerTick(self):
-        self.repaint()
-
-
     def initUI(self):
         self.text = "Body T Rex"
         self.setFixedSize(SCREEN_WIDTH, SCREEN_HEIGHT)
         self.show()
 
+    def timerTick(self):
+        self.repaint()
 
     def paintEvent(self, event):
         qp = QPainter()
         qp.begin(self)
         qp.fillRect(0, 0, self.width(), self.height(), QColor(255, 255, 255))
+        SceneManager.change_scence_if_needed()
         run_all()
         render_all(qp)
         qp.end()
-
 
     def keyPressEvent(self, event):
         key = event.key()
